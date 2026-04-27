@@ -1,5 +1,16 @@
 package com.ecochain.utils;
 
-public class PasswordManager {
+import org.mindrot.jbcrypt.BCrypt;
 
+public class PasswordManager {
+    public static String hashPassword(String plainPassword) {
+        return BCrypt.hashpw(plainPassword, BCrypt.gensalt(10));
+    }
+
+    public static boolean checkPassword(String plainPassword, String hashedPassword) {
+        if (plainPassword == null || hashedPassword == null) {
+            return false;
+        }
+        return BCrypt.checkpw(plainPassword, hashedPassword);
+    }
 }
