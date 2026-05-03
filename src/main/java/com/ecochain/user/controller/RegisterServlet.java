@@ -1,15 +1,17 @@
 package com.ecochain.user.controller;
 
 import com.ecochain.user.model.dao.UserDao;
+import com.ecochain.utils.PasswordManager;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+
+
 
 @WebServlet(name = "registerPage", value = "/register")
 public class RegisterServlet extends HttpServlet {
@@ -25,9 +27,9 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String fullName = request.getParameter("fullName");
-        String email    = request.getParameter("email");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String role     = request.getParameter("role");
+        String role = request.getParameter("role");
 
         if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || role.isEmpty()) {
             request.setAttribute("error", "Please fill all the required fields.");
@@ -35,16 +37,16 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        String hashedPassword = PasswordManager.hashPassword(password);
 
         try {
-            UserDao userDao = new UserDao();
-            if (userDao.emailExists(email)) {
+            if (UserDao.emailExists(email)) {
                 request.setAttribute("error", "Email already registered. Please login.");
                 request.getRequestDispatcher("pages/register.jsp").forward(request, response);
                 return;
             }
-            boolean userInserted = userDao.insertUser(fullName, email, hashedPassword, role);
+
+            boolean userInserted = UserDao.insertUser(fullName, email, hashedPassword, role);
             if (userInserted) {
                 request.setAttribute("success", "Registration successful! Wait for admin approval.");
                 request.getRequestDispatcher("pages/login.jsp").forward(request, response);
