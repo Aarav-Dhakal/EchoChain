@@ -1,6 +1,5 @@
 package com.ecochain.user.controller;
 
-import com.ecochain.user.model.User;
 import com.ecochain.user.model.dao.UserDao;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -11,9 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
-
 
 @WebServlet(name = "registerPage", value = "/register")
 public class RegisterServlet extends HttpServlet {
