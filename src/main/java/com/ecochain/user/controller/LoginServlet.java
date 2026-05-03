@@ -17,6 +17,15 @@ import java.sql.SQLException;
 public class LoginServlet extends HttpServlet {
 
     @Override
+    public void init() throws ServletException {
+        try {
+            UserDao.installAdmin();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("pages/login.jsp");
@@ -28,9 +37,9 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
         try {
-            UserDao userDao = new UserDao();
-            User userObj = userDao.loginUser(email, password);
+            User userObj = UserDao.loginUser(email, password);
             if (userObj != null) {
                 if (userObj.getStatus().equals("pending")) {
                     request.setAttribute("error", "Your account is pending admin approval.");
