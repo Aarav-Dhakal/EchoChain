@@ -1,6 +1,5 @@
 package com.ecochain.user.controller;
 
-import com.ecochain.user.model.User;
 import com.ecochain.user.model.dao.UserDao;
 import com.ecochain.utils.PasswordManager;
 import jakarta.servlet.RequestDispatcher;
