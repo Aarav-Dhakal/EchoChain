@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>EcoChain - Login</title>
+    <title>Login - EcoChain</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -75,7 +75,7 @@
 <body>
 <div class="container">
     <div class="logo">
-        <h1>EcoChain</h1>
+        <h1>🌿 EcoChain</h1>
         <p>Reducing food waste, feeding communities</p>
     </div>
 
